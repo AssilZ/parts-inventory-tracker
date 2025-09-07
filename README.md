@@ -99,6 +99,10 @@ src/
 
 ---
 
+**Good luck with the implementation! We're excited to see your approach to debugging, feature development, and code organization.**
+
+---
+
 ## Implementation
 
 ### Task 1: Bug Fix
@@ -116,8 +120,10 @@ src/
 **Feature:** Added ability to delete individual parts from the inventory.
 
 **Implementation:** 
-- Added delete button to each row in the parts table
-- Clicking delete removes the part and shows a success toast
+- "Delete" button on each row prompts for quantity to delete
+- Can remove partial quantity or entire part
+- If quantity to remove >= available, entire part is deleted
+- Shows remaining quantity in success message
 
 #### 2. Pagination Controls
 
@@ -134,7 +140,7 @@ src/
 **Feature:** Added sorting capabilities by name, quantity, or price.
 
 **Implementation:**
-- Click column headers to sort (Name, Quantity, Price)
+- Click column headers to sort (Name, Quantity, Price, Total Value, Added)
 - Toggle between ascending/descending order
 - Visual indicators show current sort field and direction
 - Sorting persists across pagination
@@ -154,6 +160,29 @@ src/
 - Consistency across different time zones and user sessions
 - Unambiguous records for inventory reports and analysis
 
----
+### Summary
 
-**Good luck with the implementation! We're excited to see your approach to debugging, feature development, and code organization.**
+**Bug Fix Process:**
+- Found typo in `saveParts` function: `JSON.stringify(part)` → `JSON.stringify(parts)`
+- Fixed error handling to properly reject on failure
+- Fixed total inventory value calculation - was showing only current page total instead of full inventory total
+
+**Implemented Features:**
+1. **Delete** - Remove specific quantities from inventory
+2. **Pagination** - 5 items per page with Previous/Next navigation
+3. **Sorting** - Click headers to sort by any column with visual indicators
+4. **Audit Trail** - Added timestamps showing when parts were added
+
+**Technical Decisions:**
+- Used absolute timestamps over relative times for audit clarity
+- Inline pagination calculation without useEffect to avoid re-renders
+
+**Challenges:**
+- None significant - straightforward React state management
+
+**Assumptions:**
+- Small inventory (localStorage limits)
+- Single user (no auth/permissions)
+- Users specify exact quantities to delete from inventory
+- 5 items per page is reasonable default
+- Absolute timestamps preferred over relative
