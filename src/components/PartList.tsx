@@ -3,6 +3,7 @@ import { Part } from '../types';
 
 interface PartListProps {
   parts: Part[];
+  allParts?: Part[];
   onDeletePart?: (id: string) => void;
   currentPage?: number;
   totalPages?: number;
@@ -15,6 +16,7 @@ interface PartListProps {
 
 export const PartList: React.FC<PartListProps> = ({ 
   parts, 
+  allParts,
   onDeletePart,
   currentPage = 1,
   totalPages = 1,
@@ -44,7 +46,8 @@ export const PartList: React.FC<PartListProps> = ({
   };
 
   const getTotalValue = (): string => {
-    const total = parts.reduce((sum, part) => sum + (part.quantity * part.price), 0);
+    const partsToCalculate = allParts || parts;
+    const total = partsToCalculate.reduce((sum, part) => sum + (part.quantity * part.price), 0);
     return formatPrice(total);
   };
 

@@ -43,7 +43,7 @@ function App() {
 
   // Generate unique ID for new parts
   const generateId = (): string => {
-    return Date.now().toString() + Math.random().toString(36).substr(2, 9);
+    return Date.now().toString() + Math.random().toString(36).substring(2, 11);
   };
 
   // Add new part to the list
@@ -171,6 +171,7 @@ function App() {
         <PartForm onAddPart={handleAddPart} />
         <PartList 
           parts={paginatedParts} 
+          allParts={sortedParts}
           onDeletePart={handleDeletePart}
           currentPage={validCurrentPage}
           totalPages={totalPages}
