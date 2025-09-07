@@ -36,7 +36,7 @@ export const getParts = (): Promise<Part[]> => {
  * This function appears to work but has a critical bug
  */
 export const saveParts = (parts: Part[]): Promise<void> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     try {
       // Validate parts data before saving
       if (!Array.isArray(parts)) {
