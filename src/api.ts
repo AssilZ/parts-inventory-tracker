@@ -90,7 +90,7 @@ export const loadPartsFromStorage = (): Part[] => {
       }
 
       // Return valid parts with additional validation
-      return data.parts.filter(part =>
+      return data.parts.filter((part: Part) =>
         part &&
         typeof part.id === 'string' &&
         typeof part.name === 'string' &&
