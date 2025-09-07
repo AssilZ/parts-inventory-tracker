@@ -109,7 +109,9 @@ src/
 
 **Solution:** Changed `part` to `parts` to correctly serialize the parts array to localStorage.
 
-### Task 2: Delete Functionality
+### Task 2: Features
+
+#### 1. Delete Functionality
 
 **Feature:** Added ability to delete individual parts from the inventory.
 
@@ -117,7 +119,7 @@ src/
 - Added delete button to each row in the parts table
 - Clicking delete removes the part and shows a success toast
 
-### Task 3: Pagination Controls
+#### 2. Pagination Controls
 
 **Feature:** Added pagination for navigating large inventories.
 
@@ -127,7 +129,7 @@ src/
 - Previous/Next buttons for navigation
 - Handles invalid page numbers gracefully
 
-### Task 4: Dynamic Sorting
+#### 3. Dynamic Sorting
 
 **Feature:** Added sorting capabilities by name, quantity, or price.
 
@@ -136,6 +138,21 @@ src/
 - Toggle between ascending/descending order
 - Visual indicators show current sort field and direction
 - Sorting persists across pagination
+
+#### 4. Audit Trail
+
+**Feature:** Added tracking of when parts were added to the inventory.
+
+**Implementation:**
+- Each part now includes a creation timestamp
+- "Added" column shows when each part was created
+- Displays full date and time (e.g., "Dec 15, 2024, 02:30 PM")
+
+**Design Decision:** Shows absolute timestamps instead of relative time (e.g., "Today", "Yesterday") to provide:
+- Precise audit trail for inventory tracking and compliance
+- Clear chronological ordering when sorting or filtering
+- Consistency across different time zones and user sessions
+- Unambiguous records for inventory reports and analysis
 
 ---
 

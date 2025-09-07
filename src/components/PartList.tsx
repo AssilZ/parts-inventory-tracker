@@ -48,6 +48,17 @@ export const PartList: React.FC<PartListProps> = ({
     return formatPrice(total);
   };
 
+  const formatDate = (timestamp: number): string => {
+    const date = new Date(timestamp);
+    return date.toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   return (
     <div className="card">
       <h2>Parts Inventory ({totalParts || parts.length} items)</h2>
@@ -74,6 +85,7 @@ export const PartList: React.FC<PartListProps> = ({
                 Price {sortField === 'price' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
               <th>Total Value</th>
+              <th>Added</th>
               {onDeletePart && <th></th>}
             </tr>
           </thead>
@@ -84,6 +96,7 @@ export const PartList: React.FC<PartListProps> = ({
                 <td>{part.quantity}</td>
                 <td>{formatPrice(part.price)}</td>
                 <td>{formatPrice(part.quantity * part.price)}</td>
+                <td>{formatDate(part.createdAt)}</td>
                 {onDeletePart && (
                   <td>
                     <button

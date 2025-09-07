@@ -6,13 +6,15 @@ const INITIAL_PARTS: Part[] = [
     id: '1',
     name: 'Engine Oil Filter',
     quantity: 50,
-    price: 12.99
+    price: 12.99,
+    createdAt: Date.now() - 86400000 * 7 // 7 days ago
   },
   {
     id: '2',
     name: 'Brake Pads',
     quantity: 25,
-    price: 45.50
+    price: 45.50,
+    createdAt: Date.now() - 86400000 * 3 // 3 days ago
   }
 ];
 

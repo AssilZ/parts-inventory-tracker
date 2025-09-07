@@ -47,10 +47,11 @@ function App() {
   };
 
   // Add new part to the list
-  const handleAddPart = (newPart: Omit<Part, 'id'>) => {
+  const handleAddPart = (newPart: Omit<Part, 'id' | 'createdAt'>) => {
     const partWithId: Part = {
       ...newPart,
-      id: generateId()
+      id: generateId(),
+      createdAt: Date.now()
     };
 
     setParts(prevParts => [...prevParts, partWithId]);
