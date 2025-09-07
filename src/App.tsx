@@ -11,7 +11,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortField, setSortField] = useState<'name' | 'quantity' | 'price' | null>(null);
+  const [sortField, setSortField] = useState<'name' | 'quantity' | 'price' | 'total' | 'createdAt' | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const itemsPerPage = 5;
 
@@ -71,8 +71,16 @@ function App() {
   const sortedParts = [...parts].sort((a, b) => {
     if (!sortField) return 0;
     
-    let aValue = a[sortField];
-    let bValue = b[sortField];
+    let aValue: any;
+    let bValue: any;
+    
+    if (sortField === 'total') {
+      aValue = a.quantity * a.price;
+      bValue = b.quantity * b.price;
+    } else {
+      aValue = a[sortField as keyof Part];
+      bValue = b[sortField as keyof Part];
+    }
     
     if (sortField === 'name') {
       aValue = (aValue as string).toLowerCase();
@@ -92,7 +100,7 @@ function App() {
   const paginatedParts = sortedParts.slice(startIndex, endIndex);
   
   // Handle sort field change
-  const handleSort = (field: 'name' | 'quantity' | 'price') => {
+  const handleSort = (field: 'name' | 'quantity' | 'price' | 'total' | 'createdAt') => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {

@@ -8,9 +8,9 @@ interface PartListProps {
   totalPages?: number;
   onPageChange?: (page: number) => void;
   totalParts?: number;
-  sortField?: 'name' | 'quantity' | 'price' | null;
+  sortField?: 'name' | 'quantity' | 'price' | 'total' | 'createdAt' | null;
   sortDirection?: 'asc' | 'desc';
-  onSort?: (field: 'name' | 'quantity' | 'price') => void;
+  onSort?: (field: 'name' | 'quantity' | 'price' | 'total' | 'createdAt') => void;
 }
 
 export const PartList: React.FC<PartListProps> = ({ 
@@ -84,8 +84,18 @@ export const PartList: React.FC<PartListProps> = ({
               >
                 Price {sortField === 'price' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
-              <th>Total Value</th>
-              <th>Added</th>
+              <th 
+                onClick={() => onSort && onSort('total')}
+                style={{ cursor: onSort ? 'pointer' : 'default' }}
+              >
+                Total Value {sortField === 'total' && (sortDirection === 'asc' ? '↑' : '↓')}
+              </th>
+              <th 
+                onClick={() => onSort && onSort('createdAt')}
+                style={{ cursor: onSort ? 'pointer' : 'default' }}
+              >
+                Added {sortField === 'createdAt' && (sortDirection === 'asc' ? '↑' : '↓')}
+              </th>
               {onDeletePart && <th></th>}
             </tr>
           </thead>
