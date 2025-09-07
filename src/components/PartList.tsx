@@ -4,9 +4,20 @@ import { Part } from '../types';
 interface PartListProps {
   parts: Part[];
   onDeletePart?: (id: string) => void;
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange?: (page: number) => void;
+  totalParts?: number;
 }
 
-export const PartList: React.FC<PartListProps> = ({ parts, onDeletePart }) => {
+export const PartList: React.FC<PartListProps> = ({ 
+  parts, 
+  onDeletePart,
+  currentPage = 1,
+  totalPages = 1,
+  onPageChange,
+  totalParts
+}) => {
   if (parts.length === 0) {
     return (
       <div className="card">
@@ -33,7 +44,7 @@ export const PartList: React.FC<PartListProps> = ({ parts, onDeletePart }) => {
 
   return (
     <div className="card">
-      <h2>Parts Inventory ({parts.length} items)</h2>
+      <h2>Parts Inventory ({totalParts || parts.length} items)</h2>
       <div className="parts-list">
         <table className="parts-table">
           <thead>
@@ -76,6 +87,35 @@ export const PartList: React.FC<PartListProps> = ({ parts, onDeletePart }) => {
         }}>
           <strong>Total Inventory Value: {getTotalValue()}</strong>
         </div>
+        {totalPages > 1 && onPageChange && (
+          <div className="pagination-controls" style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '10px',
+            marginTop: '20px'
+          }}>
+            <button 
+              onClick={() => onPageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="btn btn-secondary"
+              style={{ padding: '5px 15px' }}
+            >
+              Previous
+            </button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button 
+              onClick={() => onPageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="btn btn-secondary"
+              style={{ padding: '5px 15px' }}
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -10,6 +10,8 @@ function App() {
   const [parts, setParts] = useState<Part[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   // Load initial parts data on component mount
   useEffect(() => {
@@ -62,6 +64,13 @@ function App() {
     }
   };
 
+  // Calculate pagination
+  const totalPages = Math.ceil(parts.length / itemsPerPage);
+  const validCurrentPage = currentPage > totalPages && totalPages > 0 ? 1 : currentPage;
+  const startIndex = (validCurrentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedParts = parts.slice(startIndex, endIndex);
+
   // Save parts data to localStorage
   const handleSaveParts = async () => {
     try {
@@ -95,7 +104,14 @@ function App() {
 
       <div className="main-content">
         <PartForm onAddPart={handleAddPart} />
-        <PartList parts={parts} onDeletePart={handleDeletePart} />
+        <PartList 
+          parts={paginatedParts} 
+          onDeletePart={handleDeletePart}
+          currentPage={validCurrentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          totalParts={parts.length}
+        />
       </div>
 
       <div className="save-section">

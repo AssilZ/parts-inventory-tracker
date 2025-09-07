@@ -117,6 +117,16 @@ src/
 - Added delete button to each row in the parts table
 - Clicking delete removes the part and shows a success toast
 
+### Task 3: Pagination Controls
+
+**Feature:** Added pagination for navigating large inventories.
+
+**Implementation:**
+- Displays 5 items per page
+- Shows current page and total pages
+- Previous/Next buttons for navigation
+- Handles invalid page numbers gracefully
+
 ---
 
 **Good luck with the implementation! We're excited to see your approach to debugging, feature development, and code organization.**
