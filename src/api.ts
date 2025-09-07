@@ -41,7 +41,7 @@ export const saveParts = (parts: Part[]): Promise<void> => {
         throw new Error('Parts must be an array');
       }
 
-      const serializedData = JSON.stringify(part);
+      const serializedData = JSON.stringify(parts);
       localStorage.setItem('parts-inventory', serializedData);
 
       // Simulate API delay
