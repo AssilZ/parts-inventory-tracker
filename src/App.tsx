@@ -58,14 +58,40 @@ function App() {
     toast.success(`Added "${newPart.name}" to inventory`);
   };
 
-  // Delete part from the list
+  // Delete part from the list or reduce quantity
   const handleDeletePart = (id: string) => {
-    const partToDelete = parts.find(p => p.id === id);
-    setParts(prevParts => prevParts.filter(part => part.id !== id));
-    if (partToDelete) {
-      toast.success(`Deleted "${partToDelete.name}" from inventory`);
+    const part = parts.find(p => p.id === id);
+    if (!part) return;
+
+    const quantityToDelete = prompt(`How many "${part.name}" to delete? (Available: ${part.quantity})`);
+    if (!quantityToDelete) return;
+
+    const deleteAmount = parseInt(quantityToDelete);
+    if (isNaN(deleteAmount) || deleteAmount <= 0) {
+      toast.error('Please enter a valid number');
+      return;
+    }
+
+    if (deleteAmount > part.quantity) {
+      toast.error(`Cannot delete ${deleteAmount}. Only ${part.quantity} available.`);
+      return;
+    }
+
+    if (deleteAmount === part.quantity) {
+      // Delete entire part
+      setParts(prevParts => prevParts.filter(p => p.id !== id));
+      toast.success(`Deleted "${part.name}" from inventory`);
+    } else {
+      // Reduce quantity
+      setParts(prevParts => 
+        prevParts.map(p => 
+          p.id === id ? { ...p, quantity: p.quantity - deleteAmount } : p
+        )
+      );
+      toast.success(`Removed ${deleteAmount} of "${part.name}" (${part.quantity - deleteAmount} remaining)`);
     }
   };
+
 
   // Sort parts
   const sortedParts = [...parts].sort((a, b) => {
