@@ -53,7 +53,14 @@ function App() {
     toast.success(`Added "${newPart.name}" to inventory`);
   };
 
-
+  // Delete part from the list
+  const handleDeletePart = (id: string) => {
+    const partToDelete = parts.find(p => p.id === id);
+    setParts(prevParts => prevParts.filter(part => part.id !== id));
+    if (partToDelete) {
+      toast.success(`Deleted "${partToDelete.name}" from inventory`);
+    }
+  };
 
   // Save parts data to localStorage
   const handleSaveParts = async () => {
@@ -88,7 +95,7 @@ function App() {
 
       <div className="main-content">
         <PartForm onAddPart={handleAddPart} />
-        <PartList parts={parts} />
+        <PartList parts={parts} onDeletePart={handleDeletePart} />
       </div>
 
       <div className="save-section">

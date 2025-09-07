@@ -109,6 +109,14 @@ src/
 
 **Solution:** Changed `part` to `parts` to correctly serialize the parts array to localStorage.
 
+### Task 2: Delete Functionality
+
+**Feature:** Added ability to delete individual parts from the inventory.
+
+**Implementation:** 
+- Added delete button to each row in the parts table
+- Clicking delete removes the part and shows a success toast
+
 ---
 
 **Good luck with the implementation! We're excited to see your approach to debugging, feature development, and code organization.**

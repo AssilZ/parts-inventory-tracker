@@ -3,9 +3,10 @@ import { Part } from '../types';
 
 interface PartListProps {
   parts: Part[];
+  onDeletePart?: (id: string) => void;
 }
 
-export const PartList: React.FC<PartListProps> = ({ parts }) => {
+export const PartList: React.FC<PartListProps> = ({ parts, onDeletePart }) => {
   if (parts.length === 0) {
     return (
       <div className="card">
@@ -41,6 +42,7 @@ export const PartList: React.FC<PartListProps> = ({ parts }) => {
               <th>Quantity</th>
               <th>Price</th>
               <th>Total Value</th>
+              {onDeletePart && <th></th>}
             </tr>
           </thead>
           <tbody>
@@ -50,6 +52,17 @@ export const PartList: React.FC<PartListProps> = ({ parts }) => {
                 <td>{part.quantity}</td>
                 <td>{formatPrice(part.price)}</td>
                 <td>{formatPrice(part.quantity * part.price)}</td>
+                {onDeletePart && (
+                  <td>
+                    <button
+                      onClick={() => onDeletePart(part.id)}
+                      className="btn btn-danger"
+                      style={{ padding: '5px 15px' }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

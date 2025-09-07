@@ -203,3 +203,25 @@ body {
   font-size: 14px;
   margin-top: 5px;
 }
+
+.btn-danger {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+.btn-danger svg {
+  display: block;
+}
