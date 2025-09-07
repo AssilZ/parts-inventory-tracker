@@ -127,6 +127,16 @@ src/
 - Previous/Next buttons for navigation
 - Handles invalid page numbers gracefully
 
+### Task 4: Dynamic Sorting
+
+**Feature:** Added sorting capabilities by name, quantity, or price.
+
+**Implementation:**
+- Click column headers to sort (Name, Quantity, Price)
+- Toggle between ascending/descending order
+- Visual indicators show current sort field and direction
+- Sorting persists across pagination
+
 ---
 
 **Good luck with the implementation! We're excited to see your approach to debugging, feature development, and code organization.**

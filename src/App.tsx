@@ -11,6 +11,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortField, setSortField] = useState<'name' | 'quantity' | 'price' | null>(null);
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const itemsPerPage = 5;
 
   // Load initial parts data on component mount
@@ -64,12 +66,40 @@ function App() {
     }
   };
 
+  // Sort parts
+  const sortedParts = [...parts].sort((a, b) => {
+    if (!sortField) return 0;
+    
+    let aValue = a[sortField];
+    let bValue = b[sortField];
+    
+    if (sortField === 'name') {
+      aValue = (aValue as string).toLowerCase();
+      bValue = (bValue as string).toLowerCase();
+    }
+    
+    if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+    if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+    return 0;
+  });
+
   // Calculate pagination
-  const totalPages = Math.ceil(parts.length / itemsPerPage);
+  const totalPages = Math.ceil(sortedParts.length / itemsPerPage);
   const validCurrentPage = currentPage > totalPages && totalPages > 0 ? 1 : currentPage;
   const startIndex = (validCurrentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedParts = parts.slice(startIndex, endIndex);
+  const paginatedParts = sortedParts.slice(startIndex, endIndex);
+  
+  // Handle sort field change
+  const handleSort = (field: 'name' | 'quantity' | 'price') => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+    setCurrentPage(1);
+  };
 
   // Save parts data to localStorage
   const handleSaveParts = async () => {
@@ -111,6 +141,9 @@ function App() {
           totalPages={totalPages}
           onPageChange={setCurrentPage}
           totalParts={parts.length}
+          sortField={sortField}
+          sortDirection={sortDirection}
+          onSort={handleSort}
         />
       </div>
 

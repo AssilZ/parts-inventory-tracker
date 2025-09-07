@@ -8,6 +8,9 @@ interface PartListProps {
   totalPages?: number;
   onPageChange?: (page: number) => void;
   totalParts?: number;
+  sortField?: 'name' | 'quantity' | 'price' | null;
+  sortDirection?: 'asc' | 'desc';
+  onSort?: (field: 'name' | 'quantity' | 'price') => void;
 }
 
 export const PartList: React.FC<PartListProps> = ({ 
@@ -16,7 +19,10 @@ export const PartList: React.FC<PartListProps> = ({
   currentPage = 1,
   totalPages = 1,
   onPageChange,
-  totalParts
+  totalParts,
+  sortField,
+  sortDirection,
+  onSort
 }) => {
   if (parts.length === 0) {
     return (
@@ -49,9 +55,24 @@ export const PartList: React.FC<PartListProps> = ({
         <table className="parts-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Quantity</th>
-              <th>Price</th>
+              <th 
+                onClick={() => onSort && onSort('name')}
+                style={{ cursor: onSort ? 'pointer' : 'default' }}
+              >
+                Name {sortField === 'name' && (sortDirection === 'asc' ? '↑' : '↓')}
+              </th>
+              <th 
+                onClick={() => onSort && onSort('quantity')}
+                style={{ cursor: onSort ? 'pointer' : 'default' }}
+              >
+                Quantity {sortField === 'quantity' && (sortDirection === 'asc' ? '↑' : '↓')}
+              </th>
+              <th 
+                onClick={() => onSort && onSort('price')}
+                style={{ cursor: onSort ? 'pointer' : 'default' }}
+              >
+                Price {sortField === 'price' && (sortDirection === 'asc' ? '↑' : '↓')}
+              </th>
               <th>Total Value</th>
               {onDeletePart && <th></th>}
             </tr>
